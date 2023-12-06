@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+  backend:
+    extends:
+      file: ../communishield-backend/docker/docker-compose.yml
+      service: backend
+  postgres:
+    extends:
+      file: ../communishield-backend/docker/docker-compose.yml
+      service: postgres
+  frontend:
+    extends:
+      file: ../communishield-frontend/docker/docker-compose.yml
+      service: frontend
+
+volumes:
+  postgres_data:
+    driver: local
